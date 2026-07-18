@@ -1,13 +1,13 @@
 import { CALIFORNIA_COUNTIES } from "../data/counties";
 import { DATASET_INFO } from "../data/datasetInfo";
-import { CDL_YEARS, ET_YEARS, MONTHS, cdlUrl, etUrl } from "../utils/gcsPaths";
+import { SOIL_VARIABLES } from "../data/soilVariables";
+import { CDL_YEARS, ET_YEARS, MONTHS, cdlUrl, etUrl, soilGsPath } from "../utils/gcsPaths";
 
 export default function Sidebar({ selection, onChange }) {
-  const { dataType, county, year, month } = selection;
+  const { dataType, county, year, month, variable } = selection;
   const years = dataType === "cdl" ? CDL_YEARS : ET_YEARS;
-  const downloadUrl = dataType === "cdl" ? cdlUrl(county, year) : etUrl(county, year, month);
-  const downloadName = downloadUrl.split("/").pop();
   const info = DATASET_INFO[dataType];
+  const soilVariable = SOIL_VARIABLES.find((v) => v.key === variable);
 
   function update(patch) {
     onChange({ ...selection, ...patch });
@@ -23,6 +23,7 @@ export default function Sidebar({ selection, onChange }) {
         <select value={dataType} onChange={(e) => update({ dataType: e.target.value })}>
           <option value="cdl">Cropland Data Layer (CDL)</option>
           <option value="et">Evapotranspiration (ET)</option>
+          <option value="soil">Soil (gNATSGO)</option>
         </select>
       </label>
 
@@ -35,14 +36,25 @@ export default function Sidebar({ selection, onChange }) {
         </select>
       </label>
 
-      <label className="field">
-        <span>Year</span>
-        <select value={year} onChange={(e) => update({ year: Number(e.target.value) })}>
-          {years.map((y) => (
-            <option key={y} value={y}>{y}</option>
-          ))}
-        </select>
-      </label>
+      {dataType === "soil" ? (
+        <label className="field">
+          <span>Variable</span>
+          <select value={variable} onChange={(e) => update({ variable: e.target.value })}>
+            {SOIL_VARIABLES.map((v) => (
+              <option key={v.key} value={v.key}>{v.label}</option>
+            ))}
+          </select>
+        </label>
+      ) : (
+        <label className="field">
+          <span>Year</span>
+          <select value={year} onChange={(e) => update({ year: Number(e.target.value) })}>
+            {years.map((y) => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
+        </label>
+      )}
 
       {dataType === "et" && (
         <label className="field">
@@ -55,15 +67,34 @@ export default function Sidebar({ selection, onChange }) {
         </label>
       )}
 
-      <a className="download-btn" href={downloadUrl} download={downloadName} target="_blank" rel="noreferrer">
-        Download GeoTIFF
-      </a>
+      {dataType === "cdl" && (
+        <a className="download-btn" href={cdlUrl(county, year)} download target="_blank" rel="noreferrer">
+          Download GeoTIFF
+        </a>
+      )}
+      {dataType === "et" && (
+        <a className="download-btn" href={etUrl(county, year, month)} download target="_blank" rel="noreferrer">
+          Download GeoTIFF
+        </a>
+      )}
+      {dataType === "soil" && (
+        <div className="gs-path">
+          <span>Zarr store (multi-file - use gsutil/gcloud, not a single-click download)</span>
+          <code>{soilGsPath(county)}</code>
+        </div>
+      )}
 
       <dl className="dataset-info">
         <dt>Source</dt>
         <dd>{info.source}</dd>
         <dt>Description</dt>
         <dd>{info.description}</dd>
+        {dataType === "soil" && soilVariable && (
+          <>
+            <dt>Selected variable</dt>
+            <dd>{soilVariable.description}</dd>
+          </>
+        )}
         <dt>Spatial resolution</dt>
         <dd>{info.resolution}</dd>
         <dt>Coordinate reference system</dt>

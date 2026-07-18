@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import parseGeoraster from "georaster";
 import { cdlUrl, etUrl } from "../utils/gcsPaths";
 import { rasterToCanvas } from "../utils/rasterToCanvas";
+import { fetchSoilVariable, soilToCanvas } from "../utils/soilRender";
 
 // California's extent, padded slightly. Keeps the base map focused on the
 // dataset's actual coverage instead of letting users pan/zoom to the whole
@@ -57,19 +58,38 @@ export default function MapView({ selection }) {
     setStatus("loading");
     setErrorMessage("");
 
-    const url = selection.dataType === "cdl"
-      ? cdlUrl(selection.county, selection.year)
-      : etUrl(selection.county, selection.year, selection.month);
+    // Rasterized to our own canvas and shown via a plain L.imageOverlay,
+    // rather than georaster-layer-for-leaflet's tiled GridLayer: that
+    // library's createTile() reliably rendered the first (CDL) load in
+    // testing, but silently never fired at all for a second (ET) load (0
+    // canvases created, no error, even after eliminating every other
+    // variable - remounting the whole map, converting the source to a
+    // proper multi-overview COG, and dropping our custom
+    // pixelValuesToColorFn entirely). Root cause wasn't identified.
+    // imageOverlay is simpler, well-tested Leaflet core functionality
+    // instead of a third-party GridLayer subclass, and our data is small
+    // enough (a few MB, already fetched in full) that rasterizing
+    // client-side to one canvas is cheap. Soil (Zarr, read via zarrita)
+    // follows the same canvas + imageOverlay pattern for consistency.
+    async function load() {
+      if (selection.dataType === "soil") {
+        const result = await fetchSoilVariable(selection.county, selection.variable);
+        return soilToCanvas(result);
+      }
 
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Not available (HTTP ${response.status}). This county/year/month may not be uploaded yet.`);
-        }
-        return response.arrayBuffer();
-      })
-      .then((arrayBuffer) => parseGeoraster(arrayBuffer))
-      .then((georaster) => {
+      const url = selection.dataType === "cdl"
+        ? cdlUrl(selection.county, selection.year)
+        : etUrl(selection.county, selection.year, selection.month);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Not available (HTTP ${response.status}). This county/year/month may not be uploaded yet.`);
+      }
+      const georaster = await parseGeoraster(await response.arrayBuffer());
+      return rasterToCanvas(georaster, selection.dataType);
+    }
+
+    load()
+      .then(({ canvas, bounds }) => {
         if (requestId !== requestIdRef.current) return; // a newer selection superseded this one
 
         if (layerRef.current) {
@@ -77,19 +97,6 @@ export default function MapView({ selection }) {
           layerRef.current = null;
         }
 
-        // Rasterized to our own canvas and shown via a plain L.imageOverlay,
-        // rather than georaster-layer-for-leaflet's tiled GridLayer: that
-        // library's createTile() reliably rendered the first (CDL) load in
-        // testing, but silently never fired at all for the ET file (0
-        // canvases created, no error, even after eliminating every other
-        // variable - remounting the whole map, converting the source to a
-        // proper multi-overview COG, and dropping our custom
-        // pixelValuesToColorFn entirely). Root cause wasn't identified.
-        // imageOverlay is simpler, well-tested Leaflet core functionality
-        // instead of a third-party GridLayer subclass, and our data is
-        // small enough (a few MB, already fetched in full) that rasterizing
-        // client-side to one canvas is cheap.
-        const { canvas, bounds } = rasterToCanvas(georaster, selection.dataType);
         const layer = L.imageOverlay(canvas.toDataURL(), bounds);
         layer.addTo(map);
         layerRef.current = layer;

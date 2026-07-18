@@ -8,6 +8,7 @@ const DEFAULT_SELECTION = {
   county: "Fresno",
   year: 2020,
   month: 7,
+  variable: "soc0_100",
 };
 
 export default function App() {

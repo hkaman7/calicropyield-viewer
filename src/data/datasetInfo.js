@@ -19,4 +19,13 @@ export const DATASET_INFO = {
     coverage:
       "2008-2023 (2012 unavailable). Upload is ongoing, so some county/year/month combinations may not be available yet.",
   },
+  soil: {
+    label: "Soil (gNATSGO)",
+    source: "USDA NRCS gridded National Soil Survey Geographic Database (gNATSGO)",
+    description:
+      "Soil properties and USDA productivity/capability ratings, composited from SSURGO/STATSGO2/RSS soil surveys.",
+    resolution: "30 m",
+    crs: "EPSG:4326 (WGS 84)",
+    coverage: "2020 vintage (static - soil surveys are not resampled annually).",
+  },
 };

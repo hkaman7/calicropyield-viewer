@@ -1,10 +1,10 @@
-// Continuous brown -> yellow -> green ramp for ET (mm), scaled to the
-// actual min/max of whichever file is loaded (georaster reports these per
-// band, so the scale adapts instead of assuming a fixed range).
+// Continuous pale-blue -> deep-blue sequential ramp for ET (mm), scaled to
+// the actual min/max of whichever file is loaded (georaster reports these
+// per band, so the scale adapts instead of assuming a fixed range).
 const STOPS = [
-  [0.65, 0.44, 0.24],
-  [1.0, 0.85, 0.3],
-  [0.13, 0.55, 0.13],
+  [0.94, 0.98, 1.0],
+  [0.25, 0.55, 0.85],
+  [0.02, 0.13, 0.35],
 ];
 
 // Returns [r, g, b] (0-255 each) rather than a CSS string - this is on the

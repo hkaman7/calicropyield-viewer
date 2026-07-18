@@ -19,6 +19,20 @@ export function etUrl(county, year, month) {
   return `${BUCKET_BASE_URL}/counties/${slug}/et/${year}/${slug}_ET_${year}_${mm}.tif`;
 }
 
+// Soil (gNATSGO) is a static per-county Zarr store, not a per-year GeoTIFF -
+// "2020" is the fixed vintage of the source data, not a selectable year.
+export const SOIL_VINTAGE = "2020";
+
+export function soilZarrUrl(county) {
+  const slug = countySlug(county);
+  return `${BUCKET_BASE_URL}/counties/${slug}/soil/${SOIL_VINTAGE}/${slug}_soil.zarr`;
+}
+
+export function soilGsPath(county) {
+  const slug = countySlug(county);
+  return `gs://california-crop-yield-benchmark/counties/${slug}/soil/${SOIL_VINTAGE}/${slug}_soil.zarr`;
+}
+
 // CDL: 2008-2024, skipping 2012 (no CA CDL coverage that year).
 export const CDL_YEARS = [2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
 
