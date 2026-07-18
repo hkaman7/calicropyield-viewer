@@ -2,9 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import parseGeoraster from "georaster";
+import { DATASET_INFO } from "../data/datasetInfo";
+import { SOIL_VARIABLES } from "../data/soilVariables";
 import { cdlUrl, etUrl } from "../utils/gcsPaths";
 import { rasterToCanvas } from "../utils/rasterToCanvas";
 import { fetchSoilVariable, soilToCanvas } from "../utils/soilRender";
+
+// CDL is categorical (crop type), so it has no physical unit to show.
+function unitFor(selection) {
+  if (selection.dataType === "et") return DATASET_INFO.et.unit ?? null;
+  if (selection.dataType === "soil") {
+    return SOIL_VARIABLES.find((v) => v.key === selection.variable)?.unit ?? null;
+  }
+  return null;
+}
 
 // California's extent, padded slightly. Keeps the base map focused on the
 // dataset's actual coverage instead of letting users pan/zoom to the whole
@@ -17,6 +28,7 @@ export default function MapView({ selection }) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
   const layerRef = useRef(null);
+  const unitControlRef = useRef(null);
   const requestIdRef = useRef(0);
   const [status, setStatus] = useState("loading"); // loading | ready | error
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,6 +55,11 @@ export default function MapView({ selection }) {
     });
     light.addTo(map);
     L.control.layers({ Light: light, Dark: dark }).addTo(map);
+
+    const unitControl = L.control({ position: "bottomleft" });
+    unitControl.onAdd = () => L.DomUtil.create("div", "unit-control");
+    unitControl.addTo(map);
+    unitControlRef.current = unitControl;
 
     return () => {
       map.remove();
@@ -102,11 +119,20 @@ export default function MapView({ selection }) {
         layerRef.current = layer;
         map.fitBounds(bounds);
         setStatus("ready");
+
+        const unitDiv = unitControlRef.current?.getContainer();
+        if (unitDiv) {
+          const unit = unitFor(selection);
+          unitDiv.textContent = unit ? `Unit: ${unit}` : "";
+          unitDiv.style.display = unit ? "block" : "none";
+        }
       })
       .catch((err) => {
         if (requestId !== requestIdRef.current) return;
         setStatus("error");
         setErrorMessage(err.message || String(err));
+        const unitDiv = unitControlRef.current?.getContainer();
+        if (unitDiv) unitDiv.style.display = "none";
       });
   }, [selection]);
 

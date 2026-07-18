@@ -135,3 +135,14 @@
   max-width: 70%;
   text-align: center;
 }
+
+.unit-control {
+  display: none;
+  background: rgba(30, 37, 48, 0.85);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 0 8px 8px;
+}

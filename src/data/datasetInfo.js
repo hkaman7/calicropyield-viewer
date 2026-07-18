@@ -18,6 +18,7 @@ export const DATASET_INFO = {
     crs: "EPSG:4326 (WGS 84)",
     coverage:
       "2008-2023 (2012 unavailable). Upload is ongoing, so some county/year/month combinations may not be available yet.",
+    unit: "mm",
   },
   soil: {
     label: "Soil (gNATSGO)",
