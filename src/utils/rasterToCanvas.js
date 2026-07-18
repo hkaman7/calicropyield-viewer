@@ -16,11 +16,13 @@ for (let code = 0; code < 256; code++) {
 
 /**
  * Rasterizes a single-band georaster onto a canvas, applying the given
- * dataType's color scheme, and returns { canvas, bounds } where bounds is a
- * [[south, west], [north, east]] pair suitable for L.imageOverlay. Assumes
- * the georaster is already in plain lat/lng (EPSG:4326) - true for every
- * file this app reads - so no reprojection/warping is needed, just a
- * straight per-pixel color mapping.
+ * dataType's color scheme, and returns { canvas, bounds, min, max } where
+ * bounds is a [[south, west], [north, east]] pair suitable for
+ * L.imageOverlay, and min/max (only meaningful for ET) are the actual data
+ * range used for the color scale, for the map legend. Assumes the
+ * georaster is already in plain lat/lng (EPSG:4326) - true for every file
+ * this app reads - so no reprojection/warping is needed, just a straight
+ * per-pixel color mapping.
  */
 export function rasterToCanvas(georaster, dataType) {
   const { width, height } = georaster;
@@ -67,5 +69,5 @@ export function rasterToCanvas(georaster, dataType) {
     [georaster.ymin, georaster.xmin],
     [georaster.ymax, georaster.xmax],
   ];
-  return { canvas, bounds };
+  return { canvas, bounds, min, max };
 }

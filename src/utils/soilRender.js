@@ -1,31 +1,20 @@
 import * as zarr from "zarrita";
 import { soilZarrUrl } from "./gcsPaths";
+import { makeSequentialColorFn } from "./colorScale";
 
 // Pale tan -> brown -> dark brown ramp for continuous soil variables -
 // distinct from ET's blue and CDL's crop-legend colors.
-const CONTINUOUS_STOPS = [
+export const SOIL_CONTINUOUS_STOPS = [
   [0.98, 0.92, 0.78],
   [0.65, 0.45, 0.2],
   [0.25, 0.15, 0.05],
 ];
 
-function continuousColorRgb(value, min, max) {
-  const span = max - min || 1;
-  const t = Math.max(0, Math.min(1, (value - min) / span));
-  const segment = t < 0.5 ? 0 : 1;
-  const localT = t < 0.5 ? t / 0.5 : (t - 0.5) / 0.5;
-  const [r1, g1, b1] = CONTINUOUS_STOPS[segment];
-  const [r2, g2, b2] = CONTINUOUS_STOPS[segment + 1];
-  return [
-    Math.round(255 * (r1 + (r2 - r1) * localT)),
-    Math.round(255 * (g1 + (g2 - g1) * localT)),
-    Math.round(255 * (b1 + (b2 - b1) * localT)),
-  ];
-}
+const continuousColorRgb = makeSequentialColorFn(SOIL_CONTINUOUS_STOPS);
 
 // Fixed qualitative palette for categorical variables (niccdcd/iccdcd/
 // flodfreqdcd), indexed by integer code.
-const CATEGORICAL_PALETTE = [
+export const CATEGORICAL_PALETTE = [
   [0x1f, 0x77, 0xb4],
   [0xff, 0x7f, 0x0e],
   [0x2c, 0xa0, 0x2c],
@@ -35,6 +24,11 @@ const CATEGORICAL_PALETTE = [
   [0xe3, 0x77, 0xc2],
   [0x7f, 0x7f, 0x7f],
 ];
+
+export function categoricalColorCss(code) {
+  const [r, g, b] = CATEGORICAL_PALETTE[code % CATEGORICAL_PALETTE.length];
+  return `rgb(${r}, ${g}, ${b})`;
+}
 
 /**
  * Fetches one variable's full 2D array plus its x/y coordinates from a
@@ -71,7 +65,8 @@ export async function fetchSoilVariable(county, variableKey) {
 }
 
 /** Rasterizes a fetchSoilVariable() result onto a canvas, returning
- * { canvas, bounds } like rasterToCanvas() does for CDL/ET. */
+ * { canvas, bounds, min, max, categories } - min/max are only meaningful
+ * when categories is null (continuous variable), for the map legend. */
 export function soilToCanvas({ data, width, height, xmin, xmax, ymin, ymax, categories }) {
   const canvas = document.createElement("canvas");
   canvas.width = width;
@@ -115,5 +110,5 @@ export function soilToCanvas({ data, width, height, xmin, xmax, ymin, ymax, cate
   }
   ctx.putImageData(imageData, 0, 0);
 
-  return { canvas, bounds: [[ymin, xmin], [ymax, xmax]] };
+  return { canvas, bounds: [[ymin, xmin], [ymax, xmax]], min, max, categories };
 }

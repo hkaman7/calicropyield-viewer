@@ -7,12 +7,29 @@ import { SOIL_VARIABLES } from "../data/soilVariables";
 import { cdlUrl, etUrl } from "../utils/gcsPaths";
 import { rasterToCanvas } from "../utils/rasterToCanvas";
 import { fetchSoilVariable, soilToCanvas } from "../utils/soilRender";
+import { ET_STOPS, stopsToCssGradient } from "../utils/colorScale";
+import { SOIL_CONTINUOUS_STOPS, categoricalColorCss } from "../utils/soilRender";
+import Legend from "./Legend";
 
-// CDL is categorical (crop type), so it has no physical unit to show.
-function unitFor(selection) {
-  if (selection.dataType === "et") return DATASET_INFO.et.unit ?? null;
+const ET_GRADIENT_CSS = stopsToCssGradient(ET_STOPS);
+const SOIL_GRADIENT_CSS = stopsToCssGradient(SOIL_CONTINUOUS_STOPS);
+
+// CDL is categorical (crop type) with ~130 possible classes, so there's no
+// sensible single legend for it - only ET and soil get one.
+function buildLegend(selection, result) {
+  if (selection.dataType === "et") {
+    return { type: "continuous", title: "ET", unit: DATASET_INFO.et.unit, min: result.min, max: result.max, gradientCss: ET_GRADIENT_CSS };
+  }
   if (selection.dataType === "soil") {
-    return SOIL_VARIABLES.find((v) => v.key === selection.variable)?.unit ?? null;
+    const info = SOIL_VARIABLES.find((v) => v.key === selection.variable);
+    if (result.categories) {
+      return {
+        type: "categorical",
+        title: info?.label ?? selection.variable,
+        items: result.categories.map((label, code) => ({ label, color: categoricalColorCss(code) })),
+      };
+    }
+    return { type: "continuous", title: info?.label ?? selection.variable, unit: info?.unit, min: result.min, max: result.max, gradientCss: SOIL_GRADIENT_CSS };
   }
   return null;
 }
@@ -28,10 +45,10 @@ export default function MapView({ selection }) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
   const layerRef = useRef(null);
-  const unitControlRef = useRef(null);
   const requestIdRef = useRef(0);
   const [status, setStatus] = useState("loading"); // loading | ready | error
   const [errorMessage, setErrorMessage] = useState("");
+  const [legend, setLegend] = useState(null);
 
   // Map is created once and reused across selection changes.
   useEffect(() => {
@@ -55,11 +72,6 @@ export default function MapView({ selection }) {
     });
     light.addTo(map);
     L.control.layers({ Light: light, Dark: dark }).addTo(map);
-
-    const unitControl = L.control({ position: "bottomleft" });
-    unitControl.onAdd = () => L.DomUtil.create("div", "unit-control");
-    unitControl.addTo(map);
-    unitControlRef.current = unitControl;
 
     return () => {
       map.remove();
@@ -106,7 +118,7 @@ export default function MapView({ selection }) {
     }
 
     load()
-      .then(({ canvas, bounds }) => {
+      .then((result) => {
         if (requestId !== requestIdRef.current) return; // a newer selection superseded this one
 
         if (layerRef.current) {
@@ -114,25 +126,18 @@ export default function MapView({ selection }) {
           layerRef.current = null;
         }
 
-        const layer = L.imageOverlay(canvas.toDataURL(), bounds);
+        const layer = L.imageOverlay(result.canvas.toDataURL(), result.bounds);
         layer.addTo(map);
         layerRef.current = layer;
-        map.fitBounds(bounds);
+        map.fitBounds(result.bounds);
         setStatus("ready");
-
-        const unitDiv = unitControlRef.current?.getContainer();
-        if (unitDiv) {
-          const unit = unitFor(selection);
-          unitDiv.textContent = unit ? `Unit: ${unit}` : "";
-          unitDiv.style.display = unit ? "block" : "none";
-        }
+        setLegend(buildLegend(selection, result));
       })
       .catch((err) => {
         if (requestId !== requestIdRef.current) return;
         setStatus("error");
         setErrorMessage(err.message || String(err));
-        const unitDiv = unitControlRef.current?.getContainer();
-        if (unitDiv) unitDiv.style.display = "none";
+        setLegend(null);
       });
   }, [selection]);
 
@@ -141,6 +146,7 @@ export default function MapView({ selection }) {
       <div ref={containerRef} className="map-container" />
       {status === "loading" && <div className="map-overlay">Loading…</div>}
       {status === "error" && <div className="map-overlay map-overlay-error">{errorMessage}</div>}
+      <Legend legend={legend} />
     </div>
   );
 }
