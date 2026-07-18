@@ -30,10 +30,18 @@ export default function MapView({ selection }) {
       maxBoundsViscosity: 1.0,
     });
     mapRef.current = map;
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+
+    const light = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "&copy; OpenStreetMap contributors",
       maxZoom: 19,
-    }).addTo(map);
+    });
+    const dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+      attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+      maxZoom: 19,
+      subdomains: "abcd",
+    });
+    light.addTo(map);
+    L.control.layers({ Light: light, Dark: dark }).addTo(map);
 
     return () => {
       map.remove();

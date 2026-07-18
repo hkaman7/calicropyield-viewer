@@ -1,4 +1,5 @@
 import { CALIFORNIA_COUNTIES } from "../data/counties";
+import { DATASET_INFO } from "../data/datasetInfo";
 import { CDL_YEARS, ET_YEARS, MONTHS, cdlUrl, etUrl } from "../utils/gcsPaths";
 
 export default function Sidebar({ selection, onChange }) {
@@ -6,6 +7,7 @@ export default function Sidebar({ selection, onChange }) {
   const years = dataType === "cdl" ? CDL_YEARS : ET_YEARS;
   const downloadUrl = dataType === "cdl" ? cdlUrl(county, year) : etUrl(county, year, month);
   const downloadName = downloadUrl.split("/").pop();
+  const info = DATASET_INFO[dataType];
 
   function update(patch) {
     onChange({ ...selection, ...patch });
@@ -57,11 +59,18 @@ export default function Sidebar({ selection, onChange }) {
         Download GeoTIFF
       </a>
 
-      <p className="hint">
-        {dataType === "cdl"
-          ? "USDA Cropland Data Layer, 30m, EPSG:4326."
-          : "OpenET monthly evapotranspiration, 30m, EPSG:4326. Some county/year/month combinations may not be uploaded yet."}
-      </p>
+      <dl className="dataset-info">
+        <dt>Source</dt>
+        <dd>{info.source}</dd>
+        <dt>Description</dt>
+        <dd>{info.description}</dd>
+        <dt>Spatial resolution</dt>
+        <dd>{info.resolution}</dd>
+        <dt>Coordinate reference system</dt>
+        <dd>{info.crs}</dd>
+        <dt>Coverage</dt>
+        <dd>{info.coverage}</dd>
+      </dl>
     </aside>
   );
 }

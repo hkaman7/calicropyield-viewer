@@ -62,11 +62,29 @@
   background: #2563eb;
 }
 
-.hint {
-  margin-top: 24px;
+.dataset-info {
+  margin: 24px 0 0 0;
+  padding-top: 16px;
+  border-top: 1px solid #2e3646;
   font-size: 12px;
-  color: #7b8794;
   line-height: 1.4;
+}
+
+.dataset-info dt {
+  color: #6b7684;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 10px;
+  margin-top: 12px;
+}
+
+.dataset-info dt:first-child {
+  margin-top: 0;
+}
+
+.dataset-info dd {
+  margin: 2px 0 0 0;
+  color: #c7ced6;
 }
 
 .map-view {
