@@ -28,6 +28,11 @@ export function soilZarrUrl(county) {
   return `${BUCKET_BASE_URL}/counties/${slug}/soil/${SOIL_VINTAGE}/${slug}_soil.zarr`;
 }
 
+export function climateZarrUrl(county, year) {
+  const slug = countySlug(county);
+  return `${BUCKET_BASE_URL}/counties/${slug}/climate/${year}/DayMet_${slug}_${year}.zarr`;
+}
+
 // CDL: 2008-2024, skipping 2012 (no CA CDL coverage that year).
 export const CDL_YEARS = [2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
 
@@ -36,5 +41,8 @@ export const CDL_YEARS = [2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 
 // not exist yet; the map view surfaces that as a "not available" message
 // rather than failing silently.
 export const ET_YEARS = [2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+
+// Climate (Daymet): 2008-2023, skipping 2012 - same range as ET.
+export const CLIMATE_YEARS = ET_YEARS;
 
 export const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);

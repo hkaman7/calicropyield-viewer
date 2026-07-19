@@ -4,18 +4,22 @@ import "leaflet/dist/leaflet.css";
 import parseGeoraster from "georaster";
 import { DATASET_INFO } from "../data/datasetInfo";
 import { SOIL_VARIABLES } from "../data/soilVariables";
+import { CLIMATE_VARIABLES } from "../data/climateVariables";
 import { cdlUrl, etUrl } from "../utils/gcsPaths";
 import { rasterToCanvas } from "../utils/rasterToCanvas";
 import { fetchSoilVariable, soilToCanvas } from "../utils/soilRender";
-import { ET_STOPS, stopsToCssGradient } from "../utils/colorScale";
+import { fetchClimateVariable, climateToCanvas } from "../utils/climateRender";
+import { ET_STOPS, CLIMATE_STOPS, stopsToCssGradient } from "../utils/colorScale";
 import { SOIL_CONTINUOUS_STOPS, categoricalColorCss } from "../utils/soilRender";
+import { dayOfYearIndex } from "../utils/daymetCalendar";
 import Legend from "./Legend";
 
 const ET_GRADIENT_CSS = stopsToCssGradient(ET_STOPS);
 const SOIL_GRADIENT_CSS = stopsToCssGradient(SOIL_CONTINUOUS_STOPS);
+const CLIMATE_GRADIENT_CSS = stopsToCssGradient(CLIMATE_STOPS);
 
 // CDL is categorical (crop type) with ~130 possible classes, so there's no
-// sensible single legend for it - only ET and soil get one.
+// sensible single legend for it - only ET, soil, and climate get one.
 function buildLegend(selection, result) {
   if (selection.dataType === "et") {
     return { type: "continuous", title: "ET", unit: DATASET_INFO.et.unit, min: result.min, max: result.max, gradientCss: ET_GRADIENT_CSS };
@@ -30,6 +34,10 @@ function buildLegend(selection, result) {
       };
     }
     return { type: "continuous", title: info?.label ?? selection.variable, unit: info?.unit, min: result.min, max: result.max, gradientCss: SOIL_GRADIENT_CSS };
+  }
+  if (selection.dataType === "climate") {
+    const info = CLIMATE_VARIABLES.find((v) => v.key === selection.variable);
+    return { type: "continuous", title: info?.label ?? selection.variable, unit: info?.unit, min: result.min, max: result.max, gradientCss: CLIMATE_GRADIENT_CSS };
   }
   return null;
 }
@@ -104,6 +112,12 @@ export default function MapView({ selection }) {
       if (selection.dataType === "soil") {
         const result = await fetchSoilVariable(selection.county, selection.variable);
         return soilToCanvas(result);
+      }
+
+      if (selection.dataType === "climate") {
+        const dayIndex = dayOfYearIndex(selection.year, selection.month, selection.day);
+        const result = await fetchClimateVariable(selection.county, selection.year, selection.variable, dayIndex);
+        return climateToCanvas(result);
       }
 
       const url = selection.dataType === "cdl"

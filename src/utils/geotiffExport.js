@@ -131,13 +131,14 @@ function encodeGeoTiff({ data, width, height, xmin, ymax, pixelWidth, pixelHeigh
 }
 
 /**
- * Encodes a soil variable's raw grid (as returned by fetchSoilVariable) as a
- * GeoTIFF and triggers a browser download. Done entirely client-side - the
- * source is a per-county Zarr store and GitHub Pages has no backend to do
- * this conversion server-side, so we re-encode the already-fetched Zarr
- * chunks in-browser instead of shipping people a raw .zarr folder.
+ * Encodes a soil or climate variable's raw grid (as returned by
+ * fetchSoilVariable/fetchClimateVariable) as a GeoTIFF and triggers a
+ * browser download. Done entirely client-side - the source is a per-county
+ * Zarr store and GitHub Pages has no backend to do this conversion
+ * server-side, so we re-encode the already-fetched Zarr chunks in-browser
+ * instead of shipping people a raw .zarr folder.
  */
-export async function downloadSoilVariableAsGeoTiff(filename, { data, width, height, xmin, xmax, ymin, ymax }) {
+export async function downloadGridAsGeoTiff(filename, { data, width, height, xmin, xmax, ymin, ymax }) {
   const arrayBuffer = encodeGeoTiff({
     data,
     width,

@@ -29,4 +29,14 @@ export const DATASET_INFO = {
     crs: "EPSG:4326 (WGS 84)",
     coverage: "2020 vintage (static - soil surveys are not resampled annually).",
   },
+  climate: {
+    label: "Climate (Daymet)",
+    source: "Oak Ridge National Laboratory DAAC - Daymet V4, daily surface weather data",
+    description:
+      "Daily gridded surface weather estimates (temperature, precipitation, radiation, humidity, snow, day length) interpolated from ground observation stations.",
+    resolution: "1 km",
+    crs: "EPSG:4326 (WGS 84)",
+    coverage:
+      "2008-2023 (2012 unavailable), one day per view. Leap years keep Feb 29 and drop Dec 31 to stay on Daymet's fixed 365-day calendar.",
+  },
 };

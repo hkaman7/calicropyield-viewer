@@ -8,6 +8,7 @@ const DEFAULT_SELECTION = {
   county: "Fresno",
   year: 2020,
   month: 7,
+  day: 15,
   variable: "soc0_100",
 };
 

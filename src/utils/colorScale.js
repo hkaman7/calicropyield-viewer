@@ -36,3 +36,14 @@ export function stopsToCssGradient(stops) {
 }
 
 export const etColorRgb = makeSequentialColorFn(ET_STOPS);
+
+// Pale-yellow -> orange -> deep-red sequential ramp for climate variables -
+// distinct from ET's blue and soil's tan/brown, and reasonably neutral
+// across temperature/precipitation/radiation/etc. rather than tuned to one.
+export const CLIMATE_STOPS = [
+  [0.99, 0.96, 0.8],
+  [0.94, 0.55, 0.2],
+  [0.55, 0.05, 0.1],
+];
+
+export const climateColorRgb = makeSequentialColorFn(CLIMATE_STOPS);

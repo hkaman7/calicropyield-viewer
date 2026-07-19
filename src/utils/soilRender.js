@@ -1,6 +1,7 @@
 import * as zarr from "zarrita";
 import { soilZarrUrl } from "./gcsPaths";
 import { makeSequentialColorFn } from "./colorScale";
+import { continuousGridToCanvas } from "./gridRender";
 
 // Pale tan -> brown -> dark brown ramp for continuous soil variables -
 // distinct from ET's blue and CDL's crop-legend colors.
@@ -68,6 +69,11 @@ export async function fetchSoilVariable(county, variableKey) {
  * { canvas, bounds, min, max, categories } - min/max are only meaningful
  * when categories is null (continuous variable), for the map legend. */
 export function soilToCanvas({ data, width, height, xmin, xmax, ymin, ymax, categories }) {
+  if (!categories) {
+    const result = continuousGridToCanvas({ data, width, height, xmin, xmax, ymin, ymax }, continuousColorRgb);
+    return { ...result, categories: null };
+  }
+
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
@@ -75,32 +81,14 @@ export function soilToCanvas({ data, width, height, xmin, xmax, ymin, ymax, cate
   const imageData = ctx.createImageData(width, height);
   const out = imageData.data;
 
-  let min = Infinity;
-  let max = -Infinity;
-  if (!categories) {
-    for (let i = 0; i < data.length; i++) {
-      const v = data[i];
-      if (!Number.isNaN(v)) {
-        if (v < min) min = v;
-        if (v > max) max = v;
-      }
-    }
-  }
-
   let idx = 0;
   for (let i = 0; i < data.length; i++) {
     const value = data[i];
     if (Number.isNaN(value)) {
       out[idx + 3] = 0;
-    } else if (categories) {
+    } else {
       const code = Math.round(value);
       const [r, g, b] = CATEGORICAL_PALETTE[code % CATEGORICAL_PALETTE.length];
-      out[idx] = r;
-      out[idx + 1] = g;
-      out[idx + 2] = b;
-      out[idx + 3] = 255;
-    } else {
-      const [r, g, b] = continuousColorRgb(value, min, max);
       out[idx] = r;
       out[idx + 1] = g;
       out[idx + 2] = b;
@@ -110,5 +98,5 @@ export function soilToCanvas({ data, width, height, xmin, xmax, ymin, ymax, cate
   }
   ctx.putImageData(imageData, 0, 0);
 
-  return { canvas, bounds: [[ymin, xmin], [ymax, xmax]], min, max, categories };
+  return { canvas, bounds: [[ymin, xmin], [ymax, xmax]], min: undefined, max: undefined, categories };
 }
