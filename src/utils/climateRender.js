@@ -2,6 +2,7 @@ import * as zarr from "zarrita";
 import { climateZarrUrl } from "./gcsPaths";
 import { climateColorRgb } from "./colorScale";
 import { continuousGridToCanvas } from "./gridRender";
+import { maskGridToCounty } from "./countyMask";
 
 /**
  * Fetches one day's 2D (y, x) slice of a climate variable from a
@@ -26,7 +27,7 @@ export async function fetchClimateVariable(county, year, variableKey, dayIndex) 
   const xData = xResult.data;
   const yData = yResult.data;
 
-  return {
+  const grid = {
     data,
     width: shape[1],
     height: shape[0],
@@ -35,6 +36,12 @@ export async function fetchClimateVariable(county, year, variableKey, dayIndex) 
     ymin: yData[yData.length - 1],
     ymax: yData[0],
   };
+
+  // Daymet's export is bounding-box clipped, not polygon-masked - see
+  // countyMask.js for why - so crop it to the actual county shape here,
+  // same as soil/CDL/ET already are (at the source, in their case).
+  await maskGridToCounty(grid, county);
+  return grid;
 }
 
 /** Rasterizes a fetchClimateVariable() result onto a canvas, returning
