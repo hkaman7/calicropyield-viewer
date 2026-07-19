@@ -1,16 +1,32 @@
+import { useState } from "react";
 import { CALIFORNIA_COUNTIES } from "../data/counties";
 import { DATASET_INFO } from "../data/datasetInfo";
 import { SOIL_VARIABLES } from "../data/soilVariables";
-import { CDL_YEARS, ET_YEARS, MONTHS, cdlUrl, etUrl, soilGsPath } from "../utils/gcsPaths";
+import { CDL_YEARS, ET_YEARS, MONTHS, cdlUrl, etUrl, countySlug } from "../utils/gcsPaths";
+import { fetchSoilVariable } from "../utils/soilRender";
+import { downloadSoilVariableAsGeoTiff } from "../utils/geotiffExport";
 
 export default function Sidebar({ selection, onChange }) {
   const { dataType, county, year, month, variable } = selection;
   const years = dataType === "cdl" ? CDL_YEARS : ET_YEARS;
   const info = DATASET_INFO[dataType];
   const soilVariable = SOIL_VARIABLES.find((v) => v.key === variable);
+  const [soilDownloadState, setSoilDownloadState] = useState("idle"); // idle | working | error
 
   function update(patch) {
     onChange({ ...selection, ...patch });
+  }
+
+  async function handleSoilDownload() {
+    setSoilDownloadState("working");
+    try {
+      const result = await fetchSoilVariable(county, variable);
+      await downloadSoilVariableAsGeoTiff(`${countySlug(county)}_soil_${variable}.tif`, result);
+      setSoilDownloadState("idle");
+    } catch (err) {
+      console.error(err);
+      setSoilDownloadState("error");
+    }
   }
 
   return (
@@ -78,10 +94,17 @@ export default function Sidebar({ selection, onChange }) {
         </a>
       )}
       {dataType === "soil" && (
-        <div className="gs-path">
-          <span>Zarr store (multi-file - use gsutil/gcloud, not a single-click download)</span>
-          <code>{soilGsPath(county)}</code>
-        </div>
+        <button
+          type="button"
+          className="download-btn"
+          onClick={handleSoilDownload}
+          disabled={soilDownloadState === "working"}
+        >
+          {soilDownloadState === "working" ? "Preparing GeoTIFF…" : "Download GeoTIFF"}
+        </button>
+      )}
+      {dataType === "soil" && soilDownloadState === "error" && (
+        <p className="download-error">Could not prepare the GeoTIFF. Please try again.</p>
       )}
 
       <dl className="dataset-info">

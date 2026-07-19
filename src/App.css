@@ -47,39 +47,36 @@
 
 .download-btn {
   display: block;
+  width: 100%;
+  box-sizing: border-box;
   text-align: center;
   margin-top: 8px;
   padding: 10px;
+  border: none;
   border-radius: 6px;
   background: #3b82f6;
   color: #fff;
   text-decoration: none;
+  font-family: inherit;
   font-weight: 600;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .download-btn:hover {
   background: #2563eb;
 }
 
-.gs-path {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 8px;
-  padding: 10px;
-  border-radius: 6px;
-  background: #2a3140;
-  border: 1px solid #3a4452;
-  font-size: 11px;
+.download-btn:disabled {
+  background: #3a4452;
   color: #9aa5b1;
+  cursor: wait;
 }
 
-.gs-path code {
-  color: #eee;
-  font-size: 11px;
-  word-break: break-all;
-  user-select: all;
+.download-error {
+  margin: 8px 0 0 0;
+  font-size: 12px;
+  color: #f87171;
 }
 
 .dataset-info {
