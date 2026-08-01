@@ -1,0 +1,908 @@
+{
+  "ALMONDS": {
+    "cdlCodes": [
+      75
+    ],
+    "cdlNames": [
+      "Almonds"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "ANISE": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for anise/fennel"
+  },
+  "APPLES": {
+    "cdlCodes": [
+      68
+    ],
+    "cdlNames": [
+      "Apples"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "APRICOTS": {
+    "cdlCodes": [
+      223
+    ],
+    "cdlNames": [
+      "Apricots"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "ARTICHOKES": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for artichokes"
+  },
+  "ASPARAGUS": {
+    "cdlCodes": [
+      207
+    ],
+    "cdlNames": [
+      "Asparagus"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "AVOCADOS": {
+    "cdlCodes": [
+      215
+    ],
+    "cdlNames": [
+      "Avocados"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "BARLEY": {
+    "cdlCodes": [
+      21
+    ],
+    "cdlNames": [
+      "Barley"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "BEANS": {
+    "cdlCodes": [
+      42
+    ],
+    "cdlNames": [
+      "Dry Beans"
+    ],
+    "confidence": "manual",
+    "note": ""
+  },
+  "BEETS": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "table beets have no distinct CDL class (CDL 41 Sugarbeets is a different crop, already used by yield's own SUGARBEETS)"
+  },
+  "BLACKBERRIES": {
+    "cdlCodes": [
+      55
+    ],
+    "cdlNames": [
+      "Caneberries"
+    ],
+    "confidence": "manual",
+    "note": ""
+  },
+  "BLUEBERRIES": {
+    "cdlCodes": [
+      242
+    ],
+    "cdlNames": [
+      "Blueberries"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "BROCCOLI": {
+    "cdlCodes": [
+      214
+    ],
+    "cdlNames": [
+      "Broccoli"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "BRUSSELS SPROUTS": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for brussels sprouts"
+  },
+  "BUSHBERRIES": {
+    "cdlCodes": [
+      242
+    ],
+    "cdlNames": [
+      "Blueberries"
+    ],
+    "confidence": "manual",
+    "note": "CDFA umbrella term for blueberries/currants/gooseberries; mapped to CDL's closest bucket (Blueberries)"
+  },
+  "CABBAGE": {
+    "cdlCodes": [
+      243
+    ],
+    "cdlNames": [
+      "Cabbage"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "CAROBS": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for carobs"
+  },
+  "CARROTS": {
+    "cdlCodes": [
+      206
+    ],
+    "cdlNames": [
+      "Carrots"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "CAULIFLOWER": {
+    "cdlCodes": [
+      244
+    ],
+    "cdlNames": [
+      "Cauliflower"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "CELERY": {
+    "cdlCodes": [
+      245
+    ],
+    "cdlNames": [
+      "Celery"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "CHERRIES": {
+    "cdlCodes": [
+      66
+    ],
+    "cdlNames": [
+      "Cherries"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "CHESTNUTS": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for chestnuts"
+  },
+  "CHRISTMAS TREES & CUT GREENS": {
+    "cdlCodes": [
+      70
+    ],
+    "cdlNames": [
+      "Christmas Trees"
+    ],
+    "confidence": "manual",
+    "note": ""
+  },
+  "CILANTRO": {
+    "cdlCodes": [
+      57
+    ],
+    "cdlNames": [
+      "Herbs"
+    ],
+    "confidence": "manual",
+    "note": "CDL has no herb-specific classes beyond one generic 'Herbs' bucket; shared with SPICES AND HERBS and PARSLEY"
+  },
+  "CITRUS": {
+    "cdlCodes": [
+      72
+    ],
+    "cdlNames": [
+      "Citrus"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "CORN": {
+    "cdlCodes": [
+      1,
+      12,
+      13
+    ],
+    "cdlNames": [
+      "Corn",
+      "Sweet Corn",
+      "Pop or Orn Corn"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "COTTON": {
+    "cdlCodes": [
+      2
+    ],
+    "cdlNames": [
+      "Cotton"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "CUCUMBERS": {
+    "cdlCodes": [
+      50
+    ],
+    "cdlNames": [
+      "Cucumbers"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "DATES": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for dates"
+  },
+  "EGGPLANT": {
+    "cdlCodes": [
+      248
+    ],
+    "cdlNames": [
+      "Eggplants"
+    ],
+    "confidence": "manual",
+    "note": ""
+  },
+  "ENDIVE": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for endive"
+  },
+  "ESCAROLE": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for escarole"
+  },
+  "FIELD CROPS UNSPECIFIED": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "unspecified catch-all, no single CDL class applies"
+  },
+  "FIGS": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for figs"
+  },
+  "FRUITS & NUTS UNSPECIFIED": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "unspecified catch-all, no single CDL class applies"
+  },
+  "GARLIC": {
+    "cdlCodes": [
+      208
+    ],
+    "cdlNames": [
+      "Garlic"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "GRAPES": {
+    "cdlCodes": [
+      69
+    ],
+    "cdlNames": [
+      "Grapes"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "GREENS TURNIP & MUSTARD": {
+    "cdlCodes": [
+      219,
+      35
+    ],
+    "cdlNames": [
+      "Greens",
+      "Mustard"
+    ],
+    "confidence": "manual",
+    "note": "leafy-greens harvest (not root turnips - see TURNIPS); mapped to CDL's Greens + Mustard"
+  },
+  "HAY": {
+    "cdlCodes": [
+      36,
+      37
+    ],
+    "cdlNames": [
+      "Alfalfa",
+      "Other Hay/Non Alfalfa"
+    ],
+    "confidence": "manual",
+    "note": ""
+  },
+  "HORSERADISH": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for horseradish"
+  },
+  "JOJOBA": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for jojoba"
+  },
+  "KALE": {
+    "cdlCodes": [
+      219
+    ],
+    "cdlNames": [
+      "Greens"
+    ],
+    "confidence": "manual",
+    "note": "CDL has no kale-specific class; mapped to its generic 'Greens' bucket, shared with other leafy greens"
+  },
+  "KIWIFRUIT": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for kiwifruit"
+  },
+  "LEEKS": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for leeks"
+  },
+  "LEMONS": {
+    "cdlCodes": [
+      72
+    ],
+    "cdlNames": [
+      "Citrus"
+    ],
+    "confidence": "manual",
+    "note": "CDL has no lemon-specific class; mapped to generic Citrus, shared with TANGERINES & MANDARINS and CITRUS"
+  },
+  "LETTUCE": {
+    "cdlCodes": [
+      227
+    ],
+    "cdlNames": [
+      "Lettuce"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "MACADAMIA NUTS": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for macadamia nuts"
+  },
+  "MELONS": {
+    "cdlCodes": [
+      209,
+      213,
+      48
+    ],
+    "cdlNames": [
+      "Cantaloupes",
+      "Honeydew Melons",
+      "Watermelons"
+    ],
+    "confidence": "manual",
+    "note": ""
+  },
+  "MINT": {
+    "cdlCodes": [
+      14
+    ],
+    "cdlNames": [
+      "Mint"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "MUSHROOMS": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "not a field crop CDL classifies (grown indoors)"
+  },
+  "NECTARINES": {
+    "cdlCodes": [
+      218
+    ],
+    "cdlNames": [
+      "Nectarines"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "NURSERY FRUIT/VINE/NUT NON-BEARING": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "non-bearing nursery stock has no CDL class"
+  },
+  "OATS": {
+    "cdlCodes": [
+      28
+    ],
+    "cdlNames": [
+      "Oats"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "OKRA": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for okra"
+  },
+  "OLIVES": {
+    "cdlCodes": [
+      211
+    ],
+    "cdlNames": [
+      "Olives"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "ONIONS": {
+    "cdlCodes": [
+      49
+    ],
+    "cdlNames": [
+      "Onions"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "ORANGES": {
+    "cdlCodes": [
+      212
+    ],
+    "cdlNames": [
+      "Oranges"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "PARSLEY": {
+    "cdlCodes": [
+      57
+    ],
+    "cdlNames": [
+      "Herbs"
+    ],
+    "confidence": "manual",
+    "note": "shares CDL's generic 'Herbs' bucket with CILANTRO and SPICES AND HERBS"
+  },
+  "PASTURE FORAGE MISC.": {
+    "cdlCodes": [
+      176
+    ],
+    "cdlNames": [
+      "Grass/Pasture"
+    ],
+    "confidence": "manual",
+    "note": "mapped to CDL's non-cropland 'Grass/Pasture' land-cover class, not a planted-crop class"
+  },
+  "PEACHES": {
+    "cdlCodes": [
+      67
+    ],
+    "cdlNames": [
+      "Peaches"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "PEARS": {
+    "cdlCodes": [
+      77
+    ],
+    "cdlNames": [
+      "Pears"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "PEAS": {
+    "cdlCodes": [
+      53
+    ],
+    "cdlNames": [
+      "Peas"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "PECANS": {
+    "cdlCodes": [
+      74
+    ],
+    "cdlNames": [
+      "Pecans"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "PEPPERS": {
+    "cdlCodes": [
+      216
+    ],
+    "cdlNames": [
+      "Peppers"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "PERSIMMONS": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for persimmons"
+  },
+  "PISTACHIOS": {
+    "cdlCodes": [
+      204
+    ],
+    "cdlNames": [
+      "Pistachios"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "PLUMCOTS": {
+    "cdlCodes": [
+      220
+    ],
+    "cdlNames": [
+      "Plums"
+    ],
+    "confidence": "manual",
+    "note": "hybrid stone fruit; CDL lumps it in with Plums"
+  },
+  "PLUMS": {
+    "cdlCodes": [
+      220
+    ],
+    "cdlNames": [
+      "Plums"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "POMEGRANATES": {
+    "cdlCodes": [
+      217
+    ],
+    "cdlNames": [
+      "Pomegranates"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "POTATOES": {
+    "cdlCodes": [
+      43
+    ],
+    "cdlNames": [
+      "Potatoes"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "PRUNES": {
+    "cdlCodes": [
+      210
+    ],
+    "cdlNames": [
+      "Prunes"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "PUMPKINS": {
+    "cdlCodes": [
+      229
+    ],
+    "cdlNames": [
+      "Pumpkins"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "QUINCE": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for quince"
+  },
+  "RADICCHIO": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for radicchio"
+  },
+  "RADISHES": {
+    "cdlCodes": [
+      246
+    ],
+    "cdlNames": [
+      "Radishes"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "RAPPINI": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for rappini/broccoli raab"
+  },
+  "RASPBERRIES": {
+    "cdlCodes": [
+      55
+    ],
+    "cdlNames": [
+      "Caneberries"
+    ],
+    "confidence": "manual",
+    "note": ""
+  },
+  "RICE": {
+    "cdlCodes": [
+      3
+    ],
+    "cdlNames": [
+      "Rice"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "RYE": {
+    "cdlCodes": [
+      27
+    ],
+    "cdlNames": [
+      "Rye"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "RYEGRASS": {
+    "cdlCodes": [
+      59
+    ],
+    "cdlNames": [
+      "Sod/Grass Seed"
+    ],
+    "confidence": "manual",
+    "note": "grown as turf/forage seed; mapped to CDL's Sod/Grass Seed as closest available class"
+  },
+  "SAFFLOWER": {
+    "cdlCodes": [
+      33
+    ],
+    "cdlNames": [
+      "Safflower"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "SALAD GREENS MISC.": {
+    "cdlCodes": [
+      219
+    ],
+    "cdlNames": [
+      "Greens"
+    ],
+    "confidence": "manual",
+    "note": "shares CDL's generic 'Greens' bucket"
+  },
+  "SEED": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "too generic (unspecified seed crop) for any single CDL class"
+  },
+  "SILAGE": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "a harvest use-category, not a distinguishable CDL crop class"
+  },
+  "SORGHUM": {
+    "cdlCodes": [
+      4
+    ],
+    "cdlNames": [
+      "Sorghum"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "SPICES AND HERBS": {
+    "cdlCodes": [
+      57
+    ],
+    "cdlNames": [
+      "Herbs"
+    ],
+    "confidence": "manual",
+    "note": ""
+  },
+  "SPINACH": {
+    "cdlCodes": [
+      219
+    ],
+    "cdlNames": [
+      "Greens"
+    ],
+    "confidence": "manual",
+    "note": "CDL has no spinach-specific class; mapped to its generic 'Greens' bucket"
+  },
+  "SQUASH": {
+    "cdlCodes": [
+      222
+    ],
+    "cdlNames": [
+      "Squash"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "STRAW": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "a byproduct (residue), not a distinct planted CDL crop class"
+  },
+  "STRAWBERRIES": {
+    "cdlCodes": [
+      221
+    ],
+    "cdlNames": [
+      "Strawberries"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "SUGARBEETS": {
+    "cdlCodes": [
+      41
+    ],
+    "cdlNames": [
+      "Sugarbeets"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "SWISS CHARD": {
+    "cdlCodes": [
+      219
+    ],
+    "cdlNames": [
+      "Greens"
+    ],
+    "confidence": "manual",
+    "note": "CDL has no chard-specific class; mapped to its generic 'Greens' bucket"
+  },
+  "TANGERINES & MANDARINS": {
+    "cdlCodes": [
+      72
+    ],
+    "cdlNames": [
+      "Citrus"
+    ],
+    "confidence": "manual",
+    "note": "CDL has no mandarin-specific class; mapped to generic Citrus, shared with LEMONS and CITRUS"
+  },
+  "TOMATILLO": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "distinct from tomatoes; CDL has no tomatillo-specific class"
+  },
+  "TOMATOES": {
+    "cdlCodes": [
+      54
+    ],
+    "cdlNames": [
+      "Tomatoes"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "TRITICALE": {
+    "cdlCodes": [
+      205
+    ],
+    "cdlNames": [
+      "Triticale"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "TURNIPS": {
+    "cdlCodes": [
+      247
+    ],
+    "cdlNames": [
+      "Turnips"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "VEGETABLES": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "too generic/unspecified for any single CDL class"
+  },
+  "WALNUTS": {
+    "cdlCodes": [
+      76
+    ],
+    "cdlNames": [
+      "Walnuts"
+    ],
+    "confidence": "high",
+    "note": ""
+  },
+  "WHEAT": {
+    "cdlCodes": [
+      22,
+      23,
+      24
+    ],
+    "cdlNames": [
+      "Durum Wheat",
+      "Spring Wheat",
+      "Winter Wheat"
+    ],
+    "confidence": "manual",
+    "note": ""
+  },
+  "YUCCA": {
+    "cdlCodes": [],
+    "cdlNames": [],
+    "confidence": "unmatched",
+    "note": "no CDL class for yucca"
+  }
+}

@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "georaster": "^1.6.0",
+    "hyparquet": "^1.27.1",
     "leaflet": "^1.9.4",
+    "protomaps-leaflet": "^5.1.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "zarrita": "^0.7.3"

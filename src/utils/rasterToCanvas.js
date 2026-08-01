@@ -14,6 +14,13 @@ for (let code = 0; code < 256; code++) {
   }
 }
 
+// Muted fill for non-matching cropland pixels when highlightCodes is in
+// use, so the highlighted crop's fields read as a clear "spotlight" against
+// dimmed context rather than disappearing next to the CDL layer's normal
+// full-saturation palette.
+const DIMMED_RGB = [130, 130, 130];
+const DIMMED_ALPHA = 70;
+
 /**
  * Rasterizes a single-band georaster onto a canvas, applying the given
  * dataType's color scheme, and returns { canvas, bounds, min, max } where
@@ -23,8 +30,14 @@ for (let code = 0; code < 256; code++) {
  * georaster is already in plain lat/lng (EPSG:4326) - true for every file
  * this app reads - so no reprojection/warping is needed, just a straight
  * per-pixel color mapping.
+ *
+ * highlightCodes (optional, dataType "cdl" only): a Set of CDL class codes
+ * to render at full color/opacity - every other non-background pixel is
+ * dimmed to a flat gray instead of its real CDL color. Used by yield mode
+ * to show "where this crop's fields are" without the rest of the county's
+ * ~130-class CDL palette competing for attention.
  */
-export function rasterToCanvas(georaster, dataType) {
+export function rasterToCanvas(georaster, dataType, highlightCodes = null) {
   const { width, height } = georaster;
   const band = georaster.values[0];
   const min = georaster.mins?.[0];
@@ -45,6 +58,11 @@ export function rasterToCanvas(georaster, dataType) {
       if (dataType === "cdl") {
         if (value === 0 || value == null) {
           data[idx + 3] = 0;
+        } else if (highlightCodes && !highlightCodes.has(value)) {
+          data[idx] = DIMMED_RGB[0];
+          data[idx + 1] = DIMMED_RGB[1];
+          data[idx + 2] = DIMMED_RGB[2];
+          data[idx + 3] = DIMMED_ALPHA;
         } else {
           data[idx] = CDL_LUT[value * 3];
           data[idx + 1] = CDL_LUT[value * 3 + 1];

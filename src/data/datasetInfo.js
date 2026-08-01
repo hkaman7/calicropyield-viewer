@@ -29,6 +29,15 @@ export const DATASET_INFO = {
     crs: "EPSG:4326 (WGS 84)",
     coverage: "2020 vintage (static - soil surveys are not resampled annually).",
   },
+  yield: {
+    label: "Crop Yield (CDFA)",
+    source: "CDFA county agricultural commissioner crop reports, cleaned and merged by crop group",
+    description:
+      "Annual county-level crop yield (tons/hectare), aggregated per crop group from raw commodity-level reports. Pick a crop to see its CDL field locations for the selected year and a yield history across all available years.",
+    resolution: "County-level (tabular, not gridded)",
+    crs: "N/A (county aggregates, not a raster)",
+    coverage: "2008-2022 (2012 unavailable).",
+  },
   climate: {
     label: "Climate (Daymet)",
     source: "Oak Ridge National Laboratory DAAC - Daymet V4, daily surface weather data",

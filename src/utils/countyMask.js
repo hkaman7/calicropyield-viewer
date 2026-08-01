@@ -9,7 +9,7 @@ import { BUCKET_BASE_URL } from "./gcsPaths";
 const COUNTIES_GEOJSON_URL = `${BUCKET_BASE_URL}/reference/California_Counties.geojson`;
 
 let countiesPromise = null;
-function fetchCountiesGeoJson() {
+export function fetchCountiesGeoJson() {
   if (!countiesPromise) {
     countiesPromise = fetch(COUNTIES_GEOJSON_URL).then((r) => {
       if (!r.ok) throw new Error(`Failed to load county boundaries (HTTP ${r.status})`);
