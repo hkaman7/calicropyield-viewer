@@ -8,7 +8,7 @@ const KNOWN_COUNTIES = new Set(CALIFORNIA_COUNTIES);
 
 const DEFAULT_SELECTION = {
   dataType: "cdl",
-  county: "Fresno",
+  county: "Monterey",
   year: 2020,
   month: 7,
   day: 15,
