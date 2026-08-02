@@ -19,6 +19,12 @@ export function etUrl(county, year, month) {
   return `${BUCKET_BASE_URL}/counties/${slug}/et/${year}/${slug}_ET_${year}_${mm}.tif`;
 }
 
+export function landsatUrl(county, year, month) {
+  const slug = countySlug(county);
+  const mm = String(month).padStart(2, "0");
+  return `${BUCKET_BASE_URL}/counties/${slug}/landsat/${year}/${slug}_LT_${year}_${mm}.tif`;
+}
+
 // Soil (gNATSGO) is a static per-county Zarr store, not a per-year GeoTIFF -
 // "2020" is the fixed vintage of the source data, not a selectable year.
 export const SOIL_VINTAGE = "2020";
@@ -36,13 +42,24 @@ export function climateZarrUrl(county, year) {
 // CDL: 2008-2024, skipping 2012 (no CA CDL coverage that year).
 export const CDL_YEARS = [2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
 
-// ET: 2008-2023, skipping 2012. Download is still filling in as of this
-// writing (see project status) - some county/year/month combinations may
-// not exist yet; the map view surfaces that as a "not available" message
-// rather than failing silently.
+// ET: 2008-2023, skipping 2012. Complete for all 58 counties.
 export const ET_YEARS = [2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
-// Climate (Daymet): 2008-2023, skipping 2012 - same range as ET.
-export const CLIMATE_YEARS = ET_YEARS;
+// Landsat: same year range as ET. Marin and Mariposa have no Landsat source
+// data at all (permanent gap, not a bug) - the map view surfaces that as a
+// "not available" message the same way it does for any missing file.
+export const LANDSAT_YEARS = ET_YEARS;
+
+// Climate (Daymet): 2008-2022, skipping 2012 - one year short of ET/CDL.
+// The whole climate store was rebuilt from a Drive backup (to add
+// snow/pet, missing from the prior Earth Engine pipeline) that only had
+// 2008-2022 - 2023 was consciously dropped rather than left on the old,
+// inconsistent pipeline. Kern is also missing entirely: every year of its
+// Drive backup is corrupted (confirmed via independent tools, not just
+// Python's netCDF stack), and re-fetching directly from Daymet's own
+// service is currently blocked upstream (ORNL DAAC migrated to a new
+// Hyrax/OPeNDAP server that pydaymet's request format doesn't support,
+// independent of authentication).
+export const CLIMATE_YEARS = [2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
 export const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);

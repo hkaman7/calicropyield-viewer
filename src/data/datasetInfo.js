@@ -1,4 +1,14 @@
 export const DATASET_INFO = {
+  landsat: {
+    label: "Satellite Imagery (Landsat)",
+    source: "USGS Landsat Collection 2 Level-2 Surface Reflectance (TM/ETM+/OLI, harmonized)",
+    description:
+      "Monthly true-color composite (bands harmonized to a single 6-band scheme across the Landsat 5/7/8/9 time series, so the same rendering works for any year).",
+    resolution: "30 m",
+    crs: "EPSG:4326 (WGS 84)",
+    coverage:
+      "2008-2023 (2012 unavailable). Marin and Mariposa have no Landsat data at all - no source imagery ever existed for these two counties (permanent upstream gap, not a bug).",
+  },
   cdl: {
     label: "Cropland Data Layer (CDL)",
     source: "USDA National Agricultural Statistics Service (NASS)",
@@ -6,8 +16,7 @@ export const DATASET_INFO = {
       "Annual, satellite-derived land cover and crop-type classification for U.S. agricultural land.",
     resolution: "30 m",
     crs: "EPSG:4326 (WGS 84)",
-    coverage:
-      "2008-2024 (2012 unavailable). Siskiyou, Mariposa, and Marin are unavailable for 2008-2011 and 2013-2016.",
+    coverage: "2008-2024 (2012 unavailable). Complete for all 58 counties.",
   },
   et: {
     label: "Evapotranspiration (ET)",
@@ -16,8 +25,7 @@ export const DATASET_INFO = {
       "Monthly actual evapotranspiration estimates derived from satellite remote sensing and surface energy balance modeling.",
     resolution: "30 m",
     crs: "EPSG:4326 (WGS 84)",
-    coverage:
-      "2008-2023 (2012 unavailable). Upload is ongoing, so some county/year/month combinations may not be available yet.",
+    coverage: "2008-2023 (2012 unavailable). Complete for all 58 counties.",
     unit: "mm",
   },
   soil: {
@@ -46,6 +54,6 @@ export const DATASET_INFO = {
     resolution: "1 km",
     crs: "EPSG:4326 (WGS 84)",
     coverage:
-      "2008-2023 (2012 unavailable), one day per view. Leap years keep Feb 29 and drop Dec 31 to stay on Daymet's fixed 365-day calendar.",
+      "2008-2022 (2012 unavailable), one day per view. Leap years keep Feb 29 and drop Dec 31 to stay on Daymet's fixed 365-day calendar. Kern has no climate data - its source backup is corrupted and could not be recovered; re-fetching directly from Daymet is currently blocked by an upstream service change.",
   },
 };

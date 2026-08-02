@@ -4,7 +4,7 @@ import { DATASET_INFO } from "../data/datasetInfo";
 import { SOIL_VARIABLES } from "../data/soilVariables";
 import { CLIMATE_VARIABLES } from "../data/climateVariables";
 import CROP_CDL_CROSSWALK from "../data/cropCdlCrosswalk.json";
-import { CDL_YEARS, ET_YEARS, CLIMATE_YEARS, MONTHS, cdlUrl, etUrl, countySlug } from "../utils/gcsPaths";
+import { CDL_YEARS, ET_YEARS, LANDSAT_YEARS, CLIMATE_YEARS, MONTHS, cdlUrl, etUrl, landsatUrl, countySlug } from "../utils/gcsPaths";
 import { fetchSoilVariable } from "../utils/soilRender";
 import { fetchClimateVariable } from "../utils/climateRender";
 import { downloadGridAsGeoTiff } from "../utils/geotiffExport";
@@ -13,9 +13,9 @@ import { FIELD_PROPERTY_LABELS } from "../data/boundaryLayers";
 import { fetchYieldRows, uniqueSorted, filterRows, summarizeYield, downloadCsv } from "../utils/yieldData";
 import CropCombobox from "./CropCombobox";
 
-const YEARS_BY_TYPE = { cdl: CDL_YEARS, et: ET_YEARS, climate: CLIMATE_YEARS };
+const YEARS_BY_TYPE = { cdl: CDL_YEARS, et: ET_YEARS, landsat: LANDSAT_YEARS, climate: CLIMATE_YEARS };
 const HAS_VARIABLE = { soil: true, climate: true };
-const HAS_YEAR = { cdl: true, et: true, climate: true, yield: true };
+const HAS_YEAR = { cdl: true, et: true, landsat: true, climate: true, yield: true };
 
 export default function Sidebar({ selection, onChange, selectedField, onClearSelectedField }) {
   const { dataType, county, year, month, day, variable, crop } = selection;
@@ -135,6 +135,7 @@ export default function Sidebar({ selection, onChange, selectedField, onClearSel
       <label className="field">
         <span>Data type</span>
         <select value={dataType} onChange={(e) => handleDataTypeChange(e.target.value)}>
+          <option value="landsat">Satellite Imagery (Landsat)</option>
           <option value="cdl">Cropland Data Layer (CDL)</option>
           <option value="et">Evapotranspiration (ET)</option>
           <option value="soil">Soil (gNATSGO)</option>
@@ -213,7 +214,7 @@ export default function Sidebar({ selection, onChange, selectedField, onClearSel
         </label>
       )}
 
-      {(dataType === "et" || dataType === "climate") && (
+      {(dataType === "et" || dataType === "landsat" || dataType === "climate") && (
         <label className="field">
           <span>Month</span>
           <select value={month} onChange={(e) => handleMonthChange(Number(e.target.value))}>
@@ -237,6 +238,11 @@ export default function Sidebar({ selection, onChange, selectedField, onClearSel
 
       {dataType === "cdl" && (
         <a className="download-btn" href={cdlUrl(county, year)} download target="_blank" rel="noreferrer">
+          Download GeoTIFF
+        </a>
+      )}
+      {dataType === "landsat" && (
+        <a className="download-btn" href={landsatUrl(county, year, month)} download target="_blank" rel="noreferrer">
           Download GeoTIFF
         </a>
       )}

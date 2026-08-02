@@ -9,8 +9,9 @@ import { CLIMATE_VARIABLES } from "../data/climateVariables";
 import CROP_CDL_CROSSWALK from "../data/cropCdlCrosswalk.json";
 import CDL_LEGEND from "../data/cdlLegend.json";
 import { FIELD_BOUNDARIES_URL, FIELD_BOUNDARIES_LAYER, FIELD_BOUNDARIES_MIN_ZOOM, FIELD_PROPERTY_LABELS } from "../data/boundaryLayers";
-import { cdlUrl, etUrl } from "../utils/gcsPaths";
+import { cdlUrl, etUrl, landsatUrl } from "../utils/gcsPaths";
 import { rasterToCanvas } from "../utils/rasterToCanvas";
+import { landsatToCanvas } from "../utils/landsatRender";
 import { fetchSoilVariable, soilToCanvas } from "../utils/soilRender";
 import { fetchClimateVariable, climateToCanvas } from "../utils/climateRender";
 import { ET_STOPS, CLIMATE_STOPS, stopsToCssGradient } from "../utils/colorScale";
@@ -138,8 +139,8 @@ export default function MapView({ selection, onCountyClick, onFieldClick }) {
       maxZoom: 19,
       subdomains: "abcd",
     });
-    light.addTo(map);
-    const baseLayers = { Light: light, Dark: dark };
+    dark.addTo(map);
+    const baseLayers = { Dark: dark, Light: light };
     const overlays = {};
     const layersControl = L.control.layers(baseLayers, overlays).addTo(map);
 
@@ -285,6 +286,15 @@ export default function MapView({ selection, onCountyClick, onFieldClick }) {
         const match = selection.crop ? CROP_CDL_CROSSWALK[selection.crop] : null;
         const highlightCodes = match && match.cdlCodes.length > 0 ? new Set(match.cdlCodes) : null;
         return rasterToCanvas(georaster, "cdl", highlightCodes);
+      }
+
+      if (selection.dataType === "landsat") {
+        const response = await fetch(landsatUrl(selection.county, selection.year, selection.month));
+        if (!response.ok) {
+          throw new Error(`Not available (HTTP ${response.status}). This county/year/month may not be uploaded yet.`);
+        }
+        const georaster = await parseGeoraster(await response.arrayBuffer());
+        return landsatToCanvas(georaster);
       }
 
       const url = selection.dataType === "cdl"
