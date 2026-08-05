@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import MapView from "./components/MapView";
+import HomePage from "./components/HomePage";
 import { CALIFORNIA_COUNTIES } from "./data/counties";
 import "./App.css";
 
@@ -17,6 +18,7 @@ const DEFAULT_SELECTION = {
 };
 
 export default function App() {
+  const [tab, setTab] = useState("home"); // "home" | "download"
   const [selection, setSelection] = useState(DEFAULT_SELECTION);
   const [selectedField, setSelectedField] = useState(null);
 
@@ -43,15 +45,53 @@ export default function App() {
     }
   }
 
+  // Used by the home page's dataset cards / CTA to jump straight into the
+  // viewer, optionally preselecting a data type (e.g. clicking the "Climate"
+  // card should land on the Download tab with Climate already selected, not
+  // just switch tabs and leave the default CDL view showing).
+  function handleExplore(dataType) {
+    if (dataType) setSelection((s) => ({ ...s, dataType }));
+    setTab("download");
+  }
+
   return (
-    <div className="app-layout">
-      <Sidebar
-        selection={selection}
-        onChange={setSelection}
-        selectedField={selectedField}
-        onClearSelectedField={() => setSelectedField(null)}
-      />
-      <MapView selection={selection} onCountyClick={handleCountyClick} onFieldClick={handleFieldClick} />
+    <div className="app-shell">
+      <nav className="top-nav">
+        <div className="top-nav-brand" onClick={() => setTab("home")}>
+          <span className="top-nav-logo">🌾</span>
+          <span className="top-nav-title">CaliCropYield</span>
+        </div>
+        <div className="top-nav-tabs">
+          <button
+            type="button"
+            className={`top-nav-tab ${tab === "home" ? "active" : ""}`}
+            onClick={() => setTab("home")}
+          >
+            Home
+          </button>
+          <button
+            type="button"
+            className={`top-nav-tab ${tab === "download" ? "active" : ""}`}
+            onClick={() => setTab("download")}
+          >
+            Download Data
+          </button>
+        </div>
+      </nav>
+
+      {tab === "home" ? (
+        <HomePage onExplore={handleExplore} />
+      ) : (
+        <div className="app-layout">
+          <Sidebar
+            selection={selection}
+            onChange={setSelection}
+            selectedField={selectedField}
+            onClearSelectedField={() => setSelectedField(null)}
+          />
+          <MapView selection={selection} onCountyClick={handleCountyClick} onFieldClick={handleFieldClick} />
+        </div>
+      )}
     </div>
   );
 }

@@ -6,8 +6,7 @@ export const DATASET_INFO = {
       "Monthly true-color composite (bands harmonized to a single 6-band scheme across the Landsat 5/7/8/9 time series, so the same rendering works for any year).",
     resolution: "30 m",
     crs: "EPSG:4326 (WGS 84)",
-    coverage:
-      "2008-2023 (2012 unavailable). Marin and Mariposa have no Landsat data at all - no source imagery ever existed for these two counties (permanent upstream gap, not a bug).",
+    coverage: "2008-2023 (2012 unavailable). Complete for all 58 counties.",
   },
   cdl: {
     label: "Cropland Data Layer (CDL)",
@@ -27,6 +26,15 @@ export const DATASET_INFO = {
     crs: "EPSG:4326 (WGS 84)",
     coverage: "2008-2023 (2012 unavailable). Complete for all 58 counties.",
     unit: "mm",
+  },
+  irrigation: {
+    label: "Irrigation",
+    source: "UMT/Climate/IrrMapper_RF/v1_2 (Google Earth Engine)",
+    description:
+      "Binary irrigated/not-irrigated classification, pixel-aligned to each county's CDL grid. Downloadable through the calicropyield package - not yet browsable in this map viewer.",
+    resolution: "30 m",
+    crs: "EPSG:4326 (WGS 84)",
+    coverage: "2008-2023 (2012 unavailable). Complete for all 58 counties.",
   },
   soil: {
     label: "Soil (gNATSGO)",

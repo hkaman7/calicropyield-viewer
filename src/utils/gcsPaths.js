@@ -45,9 +45,9 @@ export const CDL_YEARS = [2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 
 // ET: 2008-2023, skipping 2012. Complete for all 58 counties.
 export const ET_YEARS = [2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
-// Landsat: same year range as ET. Marin and Mariposa have no Landsat source
-// data at all (permanent gap, not a bug) - the map view surfaces that as a
-// "not available" message the same way it does for any missing file.
+// Landsat: same year range as ET. Complete for all 58 counties (Marin and
+// Mariposa were backfilled from a separate source after the original
+// upload found no Landsat data for either).
 export const LANDSAT_YEARS = ET_YEARS;
 
 // Climate (Daymet): 2008-2022, skipping 2012 - one year short of ET/CDL.

@@ -1,6 +1,71 @@
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.top-nav {
+  flex-shrink: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: #171d2b;
+  border-bottom: 1px solid #232b3a;
+  box-sizing: border-box;
+}
+
+.top-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.top-nav-logo {
+  font-size: 18px;
+}
+
+.top-nav-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #eee;
+  letter-spacing: -0.01em;
+}
+
+.top-nav-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.top-nav-tab {
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #9aa5b1;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.top-nav-tab:hover {
+  color: #eee;
+}
+
+.top-nav-tab.active {
+  background: #3b82f6;
+  color: #fff;
+}
+
 .app-layout {
   display: flex;
-  height: 100vh;
+  flex: 1;
+  min-height: 0;
   width: 100vw;
 }
 
